@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Crocodile Facts</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        #fact {
+            font-size: 24px;
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        #fact.show {
+            opacity: 1;
+            animation: fadeIn 0.5s;
+        }
+        #button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        #button:hover {
+            background-color: #45a049;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fact"></div>
+    <button id="button">Get a Random Fact</button>
+
+    <script>
+        const facts = [
+            "Crocodiles are reptiles and belong to the family Crocodylidae.",
+            "They can live for over 70 years in the wild.",
+            "Crocodiles are carnivorous and primarily eat fish, birds, and mammals.",
+            "They have powerful jaws with a bite force of over 3,700 pounds per square inch.",
+            "Crocodiles can hold their breath underwater for up to an hour.",
+            "They are ectothermic, meaning their body temperature is regulated by their environment.",
+            "Crocodiles can swim at speeds of up to 20 miles per hour in short bursts.",
+            "They have a unique ability to see in the dark due to a special layer of tissue in their eyes.",
+            "Crocodiles communicate through a variety of vocalizations, including growls and hisses.",
+            "They are found in tropical and subtropical regions around the world, primarily in freshwater habitats."
+        ];
+
+        let attempts = 0;
+
+        function moveButton() {
+            const button = document.getElementById('button');
+            const x = Math.random() * (window.innerWidth - button.offsetWidth);
+            const y = Math.random() * (window.innerHeight - button.offsetHeight);
+            button.style.position = 'absolute';
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        function showFact() {
+            const factDiv = document.getElementById('fact');
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            factDiv.textContent = facts[randomIndex];
+            factDiv.classList.add('show');
+            setTimeout(() => {
+                factDiv.classList.remove('show');
+            }, 3000);
+        }
+
+        document.getElementById('button').addEventListener('mouseover', () => {
+            if (attempts < 3) {
+                attempts++;
+                moveButton();
+            } else {
+                showFact();
+            }
+        });
+
+        // Initial button position
+        moveButton();
+    </script>
+
+</body>
+</html>
