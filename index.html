@@ -11,9 +11,10 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f0f8ff;
+            background: linear-gradient(to bottom, #556B2F, #3C3C3C);
             font-family: Arial, sans-serif;
             margin: 0;
+            color: white;
         }
         #fact {
             font-size: 24px;
@@ -21,7 +22,7 @@
             padding: 20px;
             border: 2px solid #4CAF50;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
             opacity: 0;
         }
@@ -37,11 +38,21 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
         #button:hover {
             background-color: #45a049;
+        }
+        #tooltip {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -52,6 +63,7 @@
 <body>
 
     <div id="fact"></div>
+    <div id="tooltip">Click to get a random fact!</div>
     <button id="button">Get a Random Fact</button>
 
     <script>
@@ -84,9 +96,6 @@
             const randomIndex = Math.floor(Math.random() * facts.length);
             factDiv.textContent = facts[randomIndex];
             factDiv.classList.add('show');
-            setTimeout(() => {
-                factDiv.classList.remove('show');
-            }, 3000);
         }
 
         document.getElementById('button').addEventListener('mouseover', () => {
@@ -94,7 +103,17 @@
                 attempts++;
                 moveButton();
             } else {
+                const button = document.getElementById('button');
+                button.style.position = 'static'; // Center the button
+                button.style.margin = '0 auto'; // Center the button horizontally
+                document.getElementById('tooltip').style.display = 'block'; // Show tooltip
+            }
+        });
+
+        document.getElementById('button').addEventListener('click', () => {
+            if (attempts >= 3) {
                 showFact();
+                document.getElementById('tooltip').style.display = 'none'; // Hide tooltip after clicking
             }
         });
 
